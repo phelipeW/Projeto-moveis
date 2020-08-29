@@ -1,14 +1,16 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
-
+import { View } from 'react-native';
+import Button from '../../components/Buttons';
 // import { Container } from './styles';
 
 const Home = ({ navigation }) => (
-  <View>
-    <Text>Home </Text>
-    <Button title="Agenda" onPress={() => navigation.navigate('Agenda')}>
-      <Text>Agenda</Text>
-    </Button>
+  <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <Button text="Barbeiros" onPress={() => navigation.navigate('Barber')} />
+    <Button text="Agenda" onPress={() => navigation.navigate('Schedule')} />
+    <Button
+      text="Produtos/Serviços"
+      onPress={() => navigation.navigate('Product')}
+    />
   </View>
 );
 
