@@ -10,6 +10,9 @@
         "prettier",
         "prettier/react"
     ],
+    "globals": {
+      "__DEV__": "readonly"
+    },
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true

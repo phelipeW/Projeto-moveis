@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
+import { useDispatch } from 'react-redux';
 import Input from '../../../components/Input';
 import Button from '../../../components/Buttons';
 import styles from './styles';
+import { Creators as ProductActions } from '../../../store/ducks/product';
 
 const NewProduct = ({ route }) => {
+  const dispatch = useDispatch();
   // HOOKS
   const [description, setDescription] = useState('');
   const [costPrice, setCostPrice] = useState('');
