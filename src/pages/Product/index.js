@@ -1,18 +1,15 @@
-import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  FlatList,
-  TextInput,
-} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, FlatList } from 'react-native';
 import { Icon } from 'react-native-elements';
 import Modal from 'react-native-modal';
+import { useDispatch, useSelector } from 'react-redux';
+import { Creators as ProductAction } from '../../store/ducks/product';
 import styles from './styles';
 import Buttons from '../../components/Buttons';
 import { colors } from '../../styles';
 
 const Product = ({ navigation }) => {
+  const dispatch = useDispatch();
   const Products = [
     {
       id: 1,
@@ -98,6 +95,13 @@ const Product = ({ navigation }) => {
   ];
   // hooks
   const [modalVisible, setModalVisible] = useState(false);
+  const { data, loading } = useSelector((state) => state.product);
+
+  console.tron.log('data', data);
+
+  useEffect(() => {
+    dispatch(ProductAction.getProduct());
+  }, []);
 
   const renderItem = ({ item }) => {
     return (
@@ -125,7 +129,7 @@ const Product = ({ navigation }) => {
   return (
     <View>
       <FlatList
-        data={Products}
+        data={data}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
       />

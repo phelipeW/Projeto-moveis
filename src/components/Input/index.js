@@ -13,26 +13,33 @@ const Input = (props) => {
     keyboardType,
     inactive,
     label,
+    iconSvg,
+    msg,
   } = props;
   const [focus, setFocus] = useState(false);
+  const Svg = iconSvg;
 
   return (
     <View>
       <Text style={styles.label}>{label}</Text>
-      <TextInput
-        style={
-          focus
-            ? [styles.container, { borderColor: colors.secundary }, style]
-            : [styles.container, style]
-        }
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-        onFocus={() => setFocus(true)}
-        onBlur={() => setFocus(false)}
-        keyboardType={keyboardType}
-        editable={!inactive}
-      />
+      <View>
+        <TextInput
+          style={
+            focus
+              ? [styles.container, { borderColor: colors.secundary }, style]
+              : [styles.container, style]
+          }
+          value={value}
+          onChange={onChange}
+          placeholder={placeholder}
+          onFocus={() => setFocus(true)}
+          onBlur={() => setFocus(false)}
+          keyboardType={keyboardType}
+          editable={!inactive}
+        />
+        {/* {iconSvg && <Svg width="20" height="20" fill={colors.secundary} />} */}
+      </View>
+      {/* {msg && <InputMessage msg={msg} />} */}
     </View>
   );
 };

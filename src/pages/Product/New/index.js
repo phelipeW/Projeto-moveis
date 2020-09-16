@@ -57,7 +57,11 @@ const NewProduct = ({ route }) => {
             label="Preço de venda"
             style={{ marginBottom: 15 }}
           />
-          <Button text="Salvar" style={{ alignSelf: 'center' }} />
+          <Button
+            text="Salvar"
+            style={{ alignSelf: 'center' }}
+            // onPress={() => dispatch(ProductActions.postProduct())}
+          />
         </View>
       )}
     </>

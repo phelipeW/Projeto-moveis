@@ -9,7 +9,7 @@ function* createProduct({ payload }) {
   try {
     const { status, data } = yield call(api.post, '/product', payload);
     if (status === 200) {
-      yield put(ProductActions.getCardsSuccess(data));
+      yield put(ProductActions.postProductSuccess(data));
     }
   } catch {
     yield put(ProductActions.postCardError('Erro ao salvar produto'));
@@ -19,22 +19,23 @@ function* createProduct({ payload }) {
 function* getAllProducts() {
   try {
     const { status, data } = yield call(api.get, '/product');
+
     if (status === 200) {
       yield put(ProductActions.getCardsSuccess(data));
     }
   } catch {
-    yield put(ProductActions.postCardError('Erro ao salvar produto'));
+    yield put(ProductActions.getProductError('Erro ao salvar produto'));
   }
 }
 
-function* createProductWatcher() {
+export function* createProductWatcher() {
   yield takeLatest(ProductTypes.ADD_PRODUCT_REQUEST, createProduct);
 }
 
-function* getAllProductsWatcher() {
+export function* getAllProductsWatcher() {
   yield takeLatest(ProductTypes.LIST_PRODUCT_REQUEST, getAllProducts);
 }
 
 export default function* rootSaga() {
-  return yield all([fork(createProductWatcher), fork(getAllProductsWatcher)]);
+  yield all([fork(createProductWatcher), fork(getAllProductsWatcher)]);
 }
