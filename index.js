@@ -25,13 +25,14 @@ const BarberAdmin = () => {
           cardStyle: {
             backgroundColor: colors.white,
           },
+          headerShown: false,
         }}
       >
         <Stack.Screen
           name="Login"
           component={Login}
           options={{
-            title: 'Barber Admin',
+            title: '',
             headerTitleStyle: {
               alignSelf: 'center',
             },

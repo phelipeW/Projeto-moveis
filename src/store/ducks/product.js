@@ -54,7 +54,7 @@ export default function product(state = INITIAL_STATE, action) {
         loading: false,
         success: true,
         error: false,
-        ...action.payload,
+        data: action.payload,
       };
     case Types.LIST_PRODUCT_FAIL:
       return {

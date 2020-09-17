@@ -12,7 +12,7 @@ function* createProduct({ payload }) {
       yield put(ProductActions.postProductSuccess(data));
     }
   } catch {
-    yield put(ProductActions.postCardError('Erro ao salvar produto'));
+    yield put(ProductActions.postProductError('Erro ao salvar produto'));
   }
 }
 
@@ -21,10 +21,10 @@ function* getAllProducts() {
     const { status, data } = yield call(api.get, '/product');
 
     if (status === 200) {
-      yield put(ProductActions.getCardsSuccess(data));
+      yield put(ProductActions.getProductSuccess(data));
     }
   } catch {
-    yield put(ProductActions.getProductError('Erro ao salvar produto'));
+    yield put(ProductActions.getProductError('Erro ao listar produtos'));
   }
 }
 

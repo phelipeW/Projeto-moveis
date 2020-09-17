@@ -10,89 +10,7 @@ import { colors } from '../../styles';
 
 const Product = ({ navigation }) => {
   const dispatch = useDispatch();
-  const Products = [
-    {
-      id: 1,
-      description: 'Creme de barbear',
-      costPrice: '10',
-      sellPrice: '12',
-    },
-    {
-      id: 2,
-      description: 'Gel Cola',
-      costPrice: '5',
-      sellPrice: '10',
-    },
-    {
-      id: 3,
-      description: 'Corte Tesoura',
-      sellPrice: '20',
-    },
-    {
-      id: 4,
-      description: 'Corte Maquina',
-      sellPrice: '25',
-    },
-    {
-      id: 5,
-      description: 'Corte Tesoura + Maquina',
-      sellPrice: '15',
-    },
-    {
-      id: 6,
-      description: 'Creme de barbear',
-      costPrice: '10',
-      sellPrice: '12',
-    },
-    {
-      id: 7,
-      description: 'Gel Cola',
-      costPrice: '5',
-      sellPrice: '10',
-    },
-    {
-      id: 8,
-      description: 'Corte Tesoura',
-      sellPrice: '20',
-    },
-    {
-      id: 9,
-      description: 'Corte Maquina',
-      sellPrice: '25',
-    },
-    {
-      id: 10,
-      description: 'Corte Tesoura + Maquina',
-      sellPrice: '15',
-    },
-    {
-      id: 11,
-      description: 'Creme de barbear',
-      costPrice: '10',
-      sellPrice: '12',
-    },
-    {
-      id: 12,
-      description: 'Gel Cola',
-      costPrice: '5',
-      sellPrice: '10',
-    },
-    {
-      id: 13,
-      description: 'Corte Tesoura',
-      sellPrice: '20',
-    },
-    {
-      id: 14,
-      description: 'Corte Maquina',
-      sellPrice: '25',
-    },
-    {
-      id: 15,
-      description: 'Corte Tesoura + Maquina',
-      sellPrice: '15',
-    },
-  ];
+
   // hooks
   const [modalVisible, setModalVisible] = useState(false);
   const { data, loading } = useSelector((state) => state.product);
@@ -113,7 +31,7 @@ const Product = ({ navigation }) => {
       >
         <Text style={styles.text}>{item.description}</Text>
         <View style={{ flexDirection: 'row' }}>
-          <Text style={styles.price}> R$ {item.sellPrice}.00</Text>
+          <Text style={styles.price}> R$ {item.sell}</Text>
           <Icon
             name="trash"
             type="font-awesome"

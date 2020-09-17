@@ -15,7 +15,7 @@ import {
 async function saveTokens({ token, refreshToken }) {
   await AsyncStorage.multiSet([
     ['barberadmin:token', token],
-    ['barberadmin:refreshToken', refreshToken],
+    // ['barberadmin:refreshToken', refreshToken],
   ]);
 }
 
@@ -28,9 +28,9 @@ function* login({ payload }) {
   try {
     const { data, status } = yield call(api.post, '/login', payload);
     if (status === 200) {
-      const { token, refreshToken } = data;
-      if (token && refreshToken) {
-        yield call(saveTokens, { token, refreshToken });
+      const { token } = data;
+      if (token) {
+        yield call(saveTokens, { token });
       }
       yield put(LoginActions.loginSuccess(data));
     }
@@ -79,7 +79,7 @@ export function* loginWatcher() {
 }
 
 export function* logoutWatcher() {
-  yield takeLatest(LoginTypes.LOGIN_LOGOUT, logout);
+  yield takeLatest(LoginTypes.LOGOUT_REQUEST, logout);
 }
 
 export function* registerWatcher() {
