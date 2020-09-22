@@ -13,8 +13,6 @@ import { Creators as LoginActions } from '../../store/ducks/login';
 import Button from '../../components/Buttons';
 import Background from '../../../public/assets/images/barber.jpg';
 import Input from '../../components/Input';
-import emailSvg from '../../../public/assets/images/Email.svg';
-import passwordSvg from '../../../public/assets/images/Password.svg';
 import styles from './styles';
 // import { Container } from './styles';
 
@@ -45,7 +43,6 @@ const Login = ({ navigation }) => {
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Input
           label="Email"
-          iconSvg={emailSvg}
           keyboardType="email-address"
           // setRefInput={setEmailRef}
           // nextField={() => passwordRef.focus()}
@@ -64,7 +61,7 @@ const Login = ({ navigation }) => {
           //   )
           // }
           // returnKeyType="go"
-          iconSvg={passwordSvg}
+
           secureTextEntry
           value={password}
           onChangeText={(text) => setPassword(text)}

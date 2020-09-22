@@ -1,70 +1,150 @@
-import React, { useState } from 'react';
-import { View } from 'react-native';
-import { useDispatch } from 'react-redux';
-import Input from '../../../components/Input';
+import React, { useState, useEffect } from 'react';
+import { View, ActivityIndicator } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { Formik } from 'formik';
+import * as yup from 'yup';
+import FormInput from '../../../components/FormInput';
 import Button from '../../../components/Buttons';
 import styles from './styles';
-import { Creators as ProductActions } from '../../../store/ducks/product';
 
-const NewProduct = ({ route }) => {
+import { Creators as ProductActions } from '../../../store/ducks/product';
+import { colors } from '../../../styles';
+
+const NewProduct = ({ route, navigation }) => {
   const dispatch = useDispatch();
   // HOOKS
-  const [description, setDescription] = useState('');
-  const [costPrice, setCostPrice] = useState('');
-  const [sellPrice, setSellPrice] = useState('');
+  const [descriptionRef, setDescriptionRef] = useState('');
+  const [costPriceRef, setCostPriceRef] = useState('');
+  const [sellPriceRef, setSellPriceRef] = useState('');
   const readOnly = route.params?.readOnly;
   const item = route.params?.item;
+
+  const { addLoading, addSuccess } = useSelector((state) => state.product);
+
+  const doRegister = (values) => {
+    if (readOnly) {
+      dispatch(
+        ProductActions.editProductRequest({ id: item.id, product: values }),
+      );
+    } else {
+      dispatch(ProductActions.postProduct(values));
+    }
+  };
+
+  useEffect(() => {
+    if (addSuccess === true) {
+      dispatch(ProductActions.editProductReset());
+      navigation.goBack();
+    }
+  }, [addSuccess]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(ProductActions.getProduct());
+    };
+  }, []);
+
   return (
-    <>
-      {!readOnly ? (
-        <View style={styles.container}>
-          <Input
-            value={description}
-            label="Descrição"
-            onChange={(value) => setDescription(value)}
-            style={{ marginBottom: 15 }}
-          />
-          <Input
-            value={costPrice}
-            label="Preço de custo (opcional)"
-            onChange={(value) => setCostPrice(value)}
-            style={{ marginBottom: 15 }}
-            keyboardType="numeric"
-          />
-          <Input
-            value={sellPrice}
-            label="Preço de venda"
-            onChange={(value) => setSellPrice(value)}
-            style={{ marginBottom: 15 }}
-            keyboardType="numeric"
-          />
-          <Button text="Cadastrar" style={{ alignSelf: 'center' }} />
-        </View>
-      ) : (
-        <View style={styles.container}>
-          <Input
-            value={item?.description}
-            label="Descrição"
-            style={{ marginBottom: 15 }}
-          />
-          <Input
-            value={item?.costPrice}
-            label="Preço de custo (opcional)"
-            style={{ marginBottom: 15 }}
-          />
-          <Input
-            value={item?.sellPrice}
-            label="Preço de venda"
-            style={{ marginBottom: 15 }}
-          />
-          <Button
-            text="Salvar"
-            style={{ alignSelf: 'center' }}
-            // onPress={() => dispatch(ProductActions.postProduct())}
-          />
-        </View>
-      )}
-    </>
+    <View style={styles.container}>
+      <Formik
+        initialValues={{
+          description: readOnly ? item.description : '',
+          cost: readOnly ? item.cost : '',
+          sell: readOnly ? item.sell : '',
+        }}
+        onSubmit={doRegister}
+        validationSchema={yup.object().shape({
+          cost: yup.string().required('Campo obrigatório'),
+          sell: yup.string().required('Campo obrigatório'),
+          description: yup.string().required('Campo obrigatório'),
+        })}
+      >
+        {({
+          values,
+          handleChange,
+          errors,
+          touched,
+          setFieldTouched,
+          submitForm,
+        }) => (
+          <View style={styles.formikContainer}>
+            <FormInput
+              label="Descrição"
+              autoCapitalize="words"
+              setRefInput={setDescriptionRef}
+              returnKeyType="next"
+              nextField={() => costPriceRef.focus()}
+              placeholder=""
+              value={values.description}
+              onChangeText={handleChange('description')}
+              onBlur={() => setFieldTouched('description')}
+              msg={
+                touched.description && errors.description
+                  ? errors.description
+                  : null
+              }
+              style={{ borderColor: colors.light }}
+              textStyle={{
+                color: colors.black,
+
+                fontWeight: 'bold',
+              }}
+            />
+            <FormInput
+              label="Preço de custo"
+              autoCapitalize="words"
+              setRefInput={setCostPriceRef}
+              returnKeyType="next"
+              nextField={() => sellPriceRef.focus()}
+              placeholder=""
+              value={values.cost}
+              onChangeText={handleChange('cost')}
+              onBlur={() => setFieldTouched('cost')}
+              msg={touched.cost && errors.cost ? errors.cost : null}
+              style={{ borderColor: colors.light }}
+              textStyle={{
+                color: colors.black,
+
+                fontWeight: 'bold',
+              }}
+              keyboardType="numeric"
+            />
+            <FormInput
+              label="Preço de venda"
+              autoCapitalize="words"
+              setRefInput={setSellPriceRef}
+              placeholder=""
+              value={values.sell}
+              onChangeText={handleChange('sell')}
+              onBlur={() => setFieldTouched('sell')}
+              msg={touched.sell && errors.sell ? errors.sell : null}
+              style={{ borderColor: colors.light }}
+              textStyle={{
+                color: colors.black,
+
+                fontWeight: 'bold',
+              }}
+              keyboardType="numeric"
+            />
+
+            {addLoading ? (
+              <Button
+                style={{ alignSelf: 'center', marginTop: 30 }}
+                onPress={submitForm}
+              >
+                <ActivityIndicator />
+              </Button>
+            ) : (
+              <Button
+                text={readOnly ? 'Salvar' : 'Cadastrar'}
+                style={{ alignSelf: 'center', marginTop: 30 }}
+                onPress={submitForm}
+              />
+            )}
+          </View>
+        )}
+      </Formik>
+    </View>
   );
 };
 

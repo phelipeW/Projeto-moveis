@@ -13,8 +13,9 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     borderTopWidth: 0,
   },
-  text: {
+  description: {
     fontSize: 16,
+    fontWeight: '700',
   },
   price: {
     fontSize: 16,

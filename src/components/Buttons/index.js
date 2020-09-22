@@ -6,10 +6,11 @@ import styles from './styles';
 // import { Container } from './styles';
 
 const Buttons = (props) => {
-  const { text, onPress, style } = props;
+  const { text, onPress, style, children } = props;
   return (
     <Button style={[styles.button, style]} onPress={onPress}>
       <Text style={styles.text}>{text}</Text>
+      {children}
     </Button>
   );
 };

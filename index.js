@@ -25,7 +25,6 @@ const BarberAdmin = () => {
           cardStyle: {
             backgroundColor: colors.white,
           },
-          headerShown: false,
         }}
       >
         <Stack.Screen
@@ -36,6 +35,7 @@ const BarberAdmin = () => {
             headerTitleStyle: {
               alignSelf: 'center',
             },
+            headerShown: false,
           }}
         />
         <Stack.Screen
@@ -56,6 +56,7 @@ const BarberAdmin = () => {
             headerTitleStyle: {
               alignSelf: 'center',
             },
+            headerLeft: null,
           }}
         />
         <Stack.Screen
