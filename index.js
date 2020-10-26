@@ -6,6 +6,7 @@ import { Icon } from 'react-native-elements';
 import { View } from 'react-native';
 import Home from './src/pages/Home';
 import Schedule from './src/pages/Schedule';
+import NewSchedule from './src/pages/Schedule/New';
 import Barber from './src/pages/Barber';
 import NewBarber from './src/pages/Barber/New';
 import Product from './src/pages/Product';
@@ -22,8 +23,12 @@ const BarberAdmin = () => {
       <Stack.Navigator
         initialRouteName="Login"
         screenOptions={{
-          cardStyle: {
-            backgroundColor: colors.white,
+          headerStyle: {
+            backgroundColor: colors.dark,
+          },
+          headerTitleStyle: {
+            color: colors.white,
+            alignSelf: 'center',
           },
         }}
       >
@@ -32,9 +37,6 @@ const BarberAdmin = () => {
           component={Login}
           options={{
             title: '',
-            headerTitleStyle: {
-              alignSelf: 'center',
-            },
             headerShown: false,
           }}
         />
@@ -43,9 +45,7 @@ const BarberAdmin = () => {
           component={Register}
           options={{
             title: 'Criar nova conta',
-            headerTitleStyle: {
-              alignSelf: 'center',
-            },
+            headerRight: () => <View />,
           }}
         />
         <Stack.Screen
@@ -53,18 +53,27 @@ const BarberAdmin = () => {
           component={Home}
           options={{
             title: 'Barber Admin',
-            headerTitleStyle: {
-              alignSelf: 'center',
-            },
             headerLeft: null,
           }}
         />
         <Stack.Screen
           name="Schedule"
           component={Schedule}
-          options={{
+          options={({ navigation }) => ({
             title: 'Agenda',
-          }}
+            headerRight: () => (
+              <View style={{ width: 50, paddingTop: 3 }}>
+                <Icon
+                  style={{ alignSelf: 'center' }}
+                  name="plus-circle"
+                  type="font-awesome"
+                  onPress={() => navigation.navigate('NewSchedule')}
+                  size={30}
+                  color={colors.white}
+                />
+              </View>
+            ),
+          })}
         />
 
         <Stack.Screen
@@ -80,6 +89,7 @@ const BarberAdmin = () => {
                   type="font-awesome"
                   onPress={() => navigation.navigate('NewBarber')}
                   size={30}
+                  color={colors.white}
                 />
               </View>
             ),
@@ -88,7 +98,10 @@ const BarberAdmin = () => {
         <Stack.Screen
           name="NewBarber"
           options={({ route }) => ({
-            title: route.params?.readOnly ? 'Editar Barbeiro' : 'Novo Barbeiro',
+            title: route?.params?.readOnly
+              ? 'Editar Barbeiro'
+              : 'Novo Barbeiro',
+            headerRight: () => <View />,
           })}
           component={NewBarber}
         />
@@ -97,7 +110,7 @@ const BarberAdmin = () => {
           name="Product"
           component={Product}
           options={({ navigation }) => ({
-            title: 'Produtos',
+            title: 'Produtos/Serviços',
             headerRight: () => (
               <View style={{ width: 50, paddingTop: 3 }}>
                 <Icon
@@ -106,6 +119,7 @@ const BarberAdmin = () => {
                   type="font-awesome"
                   onPress={() => navigation.navigate('NewProduct')}
                   size={30}
+                  color={colors.white}
                 />
               </View>
             ),
@@ -114,9 +128,20 @@ const BarberAdmin = () => {
         <Stack.Screen
           name="NewProduct"
           options={({ route }) => ({
-            title: route.params?.readOnly ? 'Editar Produto' : 'Novo Produto',
+            title: route?.params?.readOnly
+              ? 'Editar Produto/Serviço'
+              : 'Novo Produto/Serviço',
+            headerRight: () => <View />,
           })}
           component={NewProduct}
+        />
+        <Stack.Screen
+          name="NewSchedule"
+          options={{
+            title: 'Criar agendamento',
+            headerRight: () => <View />,
+          }}
+          component={NewSchedule}
         />
       </Stack.Navigator>
     </NavigationContainer>

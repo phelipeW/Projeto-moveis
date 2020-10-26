@@ -41,7 +41,7 @@ function* login({ payload }) {
 
 function* register({ payload }) {
   try {
-    const response = yield call(api.post, '/users', payload);
+    const response = yield call(api.post, '/register', payload);
     if (response.status === 200) {
       yield put(RegisterActions.registerSuccess(response.data));
       showMessage({

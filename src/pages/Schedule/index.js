@@ -1,69 +1,75 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-import { View } from 'react-native';
-import { Calendar, LocaleConfig } from 'react-native-calendars';
+import {
+  View,
+  ImageBackground,
+  Text,
+  FlatList,
+  TouchableOpacity,
+} from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import Background from '../../../public/assets/images/barber-background.jpg';
+import { Creators as ScheduleActions } from '../../store/ducks/schedule';
+import styles from './styles';
+import { colors } from '../../styles';
 
-const date = new Date();
+export default function Schedule({ navigation }) {
+  const dispatch = useDispatch();
+  const { data } = useSelector((state) => state.schedule);
 
-LocaleConfig.locales.br = {
-  monthNames: [
-    'Janeiro',
-    'Fevereiro',
-    'Março',
-    'Abrl',
-    'Maio',
-    'Junho',
-    'Julho',
-    'Agosto',
-    'Setembro',
-    'Outubro',
-    'Novembro',
-    'Dezembro',
-  ],
-  monthNamesShort: [
-    'Jan.',
-    'Fev.',
-    'Mar.',
-    'Abr.',
-    'Mai.',
-    'Jun.',
-    'Jul.',
-    'Ago.',
-    'Set.',
-    'Out.',
-    'Nov.',
-    'Dez.',
-  ],
-  dayNames: [
-    'Segunda',
-    'Terça',
-    'Quarta',
-    'Quinta',
-    'Sexta',
-    'Sábado',
-    'Domingo',
-  ],
-  dayNamesShort: ['Seg.', 'Ter.', 'Qua.', 'Qui.', 'Sex.', 'Sab.', 'Dom.'],
-  today: date,
-};
-LocaleConfig.defaultLocale = 'br';
+  useEffect(() => {
+    dispatch(ScheduleActions.getScheduleRequest());
+  }, []);
 
-export default function Schedule() {
+  const renderSchedule = ({ item }) => {
+    return (
+      <TouchableOpacity
+        style={styles.container}
+        onPress={() =>
+          navigation.navigate('NewSchedule', { readOnly: true, item })
+        }
+        key={item?.id}
+      >
+        <View style={styles.line}>
+          <Text style={styles.label}>Inicio: </Text>
+          <Text>{item?.start_time}</Text>
+        </View>
+        <View style={styles.line}>
+          <Text style={styles.label}>Fim: </Text>
+          <Text>{item?.end_time}</Text>
+        </View>
+        <View style={styles.line}>
+          <Text style={styles.label}>Barbeiro: </Text>
+          <Text>{item?.barber?.name}</Text>
+        </View>
+        <View style={styles.line}>
+          <Text style={styles.label}>Serviço: </Text>
+          <Text>{item?.service?.description}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
   return (
-    <View>
-      <Calendar
-        minDate={date}
-        onDayPress={(day) => {
-          console.log('selected day', day);
-        }}
-        onDayLongPress={(day) => {
-          console.log('selected day', day);
-        }}
-        monthFormat="MMMM ',' yyyy"
-        onPressArrowLeft={(subtractMonth) => subtractMonth()}
-        onPressArrowRight={(addMonth) => addMonth()}
-        hideExtraDays
-      />
-    </View>
+    <ImageBackground style={{ flex: 1 }} source={Background}>
+      {data?.length ? (
+        <FlatList
+          data={data}
+          renderItem={renderSchedule}
+          keyExtractor={(item) => String(item.id)}
+        />
+      ) : (
+        <View style={{ backgroundColor: 'rgba(255,255,255,0.9)' }}>
+          <Text
+            style={{
+              alignSelf: 'center',
+              fontSize: 24,
+              color: colors.gray,
+            }}
+          >
+            Nenhum agendamento marcado
+          </Text>
+        </View>
+      )}
+    </ImageBackground>
   );
 }

@@ -1,17 +1,31 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, ImageBackground } from 'react-native';
 import Button from '../../components/Buttons';
-// import { Container } from './styles';
+import Background from '../../../public/assets/images/barber-background.jpg';
 
 const Home = ({ navigation }) => (
-  <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-    <Button text="Barbeiros" onPress={() => navigation.navigate('Barber')} />
-    <Button text="Agenda" onPress={() => navigation.navigate('Schedule')} />
-    <Button
-      text="Produtos/Serviços"
-      onPress={() => navigation.navigate('Product')}
-    />
-  </View>
+  <ImageBackground style={{ flex: 1 }} source={Background}>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Button
+        text="Barbeiros"
+        onPress={() => navigation.navigate('Barber')}
+        icon="scissors"
+        style={{ padding: 30 }}
+      />
+      <Button
+        text="Produtos/Serviços"
+        onPress={() => navigation.navigate('Product')}
+        icon="inbox"
+        style={{ padding: 30, marginTop: 20 }}
+      />
+      <Button
+        text="Agenda"
+        onPress={() => navigation.navigate('Schedule')}
+        icon="calendar"
+        style={{ padding: 30, marginTop: 20 }}
+      />
+    </View>
+  </ImageBackground>
 );
 
 export default Home;

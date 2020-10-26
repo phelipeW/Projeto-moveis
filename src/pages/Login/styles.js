@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   RegisterButtonText: {
-    color: colors.white,
+    color: colors.black,
   },
   RegisterButtonUnderline: {
     color: colors.secundary,

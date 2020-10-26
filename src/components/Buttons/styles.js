@@ -4,11 +4,10 @@ import { colors } from '../../styles';
 const styles = StyleSheet.create({
   button: {
     width: '70%',
-    height: 40,
     backgroundColor: colors.primary,
   },
   text: {
-    fontSize: 14,
+    fontSize: 18,
     color: colors.white,
     fontWeight: '700',
   },

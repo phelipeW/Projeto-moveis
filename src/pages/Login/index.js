@@ -6,8 +6,6 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
-import { Formik } from 'formik';
-import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { Creators as LoginActions } from '../../store/ducks/login';
 import Button from '../../components/Buttons';
@@ -18,10 +16,10 @@ import styles from './styles';
 
 const Login = ({ navigation }) => {
   const dispatch = useDispatch();
-  const [email, setEmail] = useState('phelipe@gmail.com');
-  const [password, setPassword] = useState('123456');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const { success } = useSelector((state) => state.login);
+  const { success, loading } = useSelector((state) => state.login);
 
   const doLogin = (email_login, password_login) => {
     dispatch(
@@ -40,53 +38,53 @@ const Login = ({ navigation }) => {
 
   return (
     <ImageBackground style={{ flex: 1 }} source={Background}>
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Input
-          label="Email"
-          keyboardType="email-address"
-          // setRefInput={setEmailRef}
-          // nextField={() => passwordRef.focus()}
-          // returnKeyType="next"
-          value={email}
-          onChangeText={(text) => setEmail(text)}
-          // onBlur={() => setFieldTouched('email')}
-          // msg={touched.email && errors.email ? errors.email : null}
-        />
-        <Input
-          label="Senha"
-          // setRefInput={setPasswordRef}
-          // nextField={() =>
-          //   buttonRef.props.onPress(() =>
-          //     doLogin(values.email, values.password),
-          //   )
-          // }
-          // returnKeyType="go"
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <View
+          style={{
+            backgroundColor: 'rgba(255, 255, 255, 0.5)',
+            height: '50%',
+            width: '80%',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Input
+            label="Email"
+            keyboardType="email-address"
+            value={email}
+            onChangeText={(text) => setEmail(text)}
+          />
+          <Input
+            label="Senha"
+            secureTextEntry
+            value={password}
+            onChangeText={(text) => setPassword(text)}
+          />
+          <Button
+            text="Entrar"
+            disabled={loading}
+            loading={loading}
+            onPress={() => doLogin(email, password)}
+          />
 
-          secureTextEntry
-          value={password}
-          onChangeText={(text) => setPassword(text)}
-          // onBlur={() => setFieldTouched('password')}
-          // msg={touched.password && errors.password ? errors.password : null}
-        />
-        <Button
-          text="Entrar"
-          // disabled={loginData.loading}
-          // loading={loginData.loading}
-          // onPress={() => props.navigation.navigate("Tab")}
-          onPress={() => doLogin(email, password)}
-        />
-
-        <SafeAreaView>
-          <TouchableOpacity
-            style={styles.containerRegister}
-            onPress={() => navigation.navigate('Register')}
-          >
-            <Text style={styles.RegisterButtonText}>
-              Não tem conta?{' '}
-              <Text style={styles.RegisterButtonUnderline}>Cadastre-se</Text>
-            </Text>
-          </TouchableOpacity>
-        </SafeAreaView>
+          <SafeAreaView>
+            <TouchableOpacity
+              style={styles.containerRegister}
+              onPress={() => navigation.navigate('Register')}
+            >
+              <Text style={styles.RegisterButtonText}>
+                Não tem conta?{' '}
+                <Text style={styles.RegisterButtonUnderline}>Cadastre-se</Text>
+              </Text>
+            </TouchableOpacity>
+          </SafeAreaView>
+        </View>
       </View>
     </ImageBackground>
   );

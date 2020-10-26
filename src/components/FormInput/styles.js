@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   label: {
-    color: colors.gray,
+    color: colors.black,
     marginBottom: metrics.basePadding / 2,
   },
 });

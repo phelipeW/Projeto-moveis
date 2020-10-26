@@ -8,9 +8,11 @@ const styles = StyleSheet.create({
     borderColor: colors.light,
     paddingHorizontal: 10,
     width: '100%',
+    color: 'rgba(0, 0, 0, 0.6)',
   },
   label: {
-    color: colors.regular,
+    color: colors.black,
+    fontSize: 16,
   },
 });
 

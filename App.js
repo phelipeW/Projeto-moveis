@@ -2,10 +2,13 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import store from './src/store';
 import Barber from './index';
+import CameraProvider from './src/components/CameraProvider';
 
 const App = () => (
   <Provider store={store}>
-    <Barber />
+    <CameraProvider>
+      <Barber />
+    </CameraProvider>
   </Provider>
 );
 

@@ -5,13 +5,12 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
     paddingHorizontal: metrics.basePadding * 2,
-    backgroundColor: colors.lightBlue,
-    height: 50,
+    backgroundColor: 'rgba(190, 190, 190, 0.9)',
+    borderTopWidth: 0,
     borderWidth: 1,
     borderRadius: 2,
-    borderTopWidth: 0,
+    padding: 15,
   },
   description: {
     fontSize: 16,
@@ -28,9 +27,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.regular,
   },
   modalView: {
-    backgroundColor: 'white',
+    backgroundColor: 'rgba(255,255,255,0.9)',
     borderRadius: 20,
-    height: 150,
+    height: 160,
     alignItems: 'center',
     shadowColor: colors.black,
     shadowOffset: {
@@ -50,6 +49,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     position: 'absolute',
     bottom: 10,
+  },
+  collapseHead: {
+    paddingHorizontal: metrics.basePadding * 2,
+    backgroundColor: 'rgba(190, 190, 190, 0.9)',
+    height: 30,
+    borderWidth: 1,
+    borderRadius: 2,
+    alignItems: 'center',
+  },
+  collapseTitle: {
+    fontSize: 20,
+    fontWeight: '700',
   },
 });
 
